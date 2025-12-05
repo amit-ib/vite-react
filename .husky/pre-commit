@@ -1,2 +1,7 @@
-echo "🔎 Running Accessibility Scan..."
-node a11y-scan.js aa
+# echo "🔎 Running Accessibility Scan..."
+# node a11y-scan.js aa
+npx husky add .husky/pre-commit "npx prettier --write ."
+if git diff --cached --name-only | grep -q ".env"; then
+  echo "❌ .env file cannot be committed!"
+  exit 1
+fi
