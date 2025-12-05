@@ -5,7 +5,7 @@ import "./App.css";
 
 function App() {
     const [count, setCount] = useState(0);
-console.log(test)
+    console.log(testing);
     return (
         <>
             <div>
@@ -30,11 +30,7 @@ console.log(test)
                 </p>
             </div>
 
-            <p>
-              
-              
-              
-              Click on the Vite and React logos to learn more</p>
+            <p>Click on the Vite and React logos to learn more</p>
         </>
     );
 }
