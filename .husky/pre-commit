@@ -1,1 +1,2 @@
-node a11y-scan.js aaa
+echo "🔎 Running Accessibility Scan..."
+node a11y-scan.js aa

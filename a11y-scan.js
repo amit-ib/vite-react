@@ -41,6 +41,9 @@ const runA11yScan = async () => {
   );
 
   await browser.close();
+
+  // return number of violations for Husky
+  return results.violations.length;
 };
 
 function generateReadableHTML(results, wcagLevel) {
@@ -137,4 +140,15 @@ function generateReadableHTML(results, wcagLevel) {
   `;
 }
 
-runA11yScan();
+// ⭐ MAIN EXECUTION + HUSKY COMMIT BLOCK ⭐
+runA11yScan().then((violations) => {
+  if (violations > 0) {
+    console.error(
+      `🚫 Accessibility violations found: ${violations}. Commit blocked.`
+    );
+    process.exit(1); // FAIL
+  }
+
+  console.log("✅ No accessibility issues. Commit allowed.");
+  process.exit(0); // PASS
+});
