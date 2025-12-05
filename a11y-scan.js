@@ -14,7 +14,7 @@ const WCAG_TAGS = {
 const selectedTags = WCAG_TAGS[wcagLevel.toLowerCase()] || WCAG_TAGS["aa"];
 
 console.log(
-  `🔍 Running accessibility scan using WCAG level: ${wcagLevel.toUpperCase()}`
+  `🔍 Running accessibility scan using WCAG level: ${wcagLevel.toUpperCase()}`,
 );
 
 const runA11yScan = async () => {
@@ -37,7 +37,7 @@ const runA11yScan = async () => {
   fs.writeFileSync("accessibility-report/a11y-report.html", html);
 
   console.log(
-    "✨ Readable accessibility report generated: accessibility-report/a11y-report.html"
+    "✨ Readable accessibility report generated: accessibility-report/a11y-report.html",
   );
 
   await browser.close();
@@ -103,8 +103,8 @@ function generateReadableHTML(results, wcagLevel) {
         </span>
 
         <p><strong>Help:</strong> <a href="${v.helpUrl}" target="_blank">${
-        v.help
-      }</a></p>
+          v.help
+        }</a></p>
 
         <details>
           <summary>Show affected elements (${v.nodes.length})</summary>
@@ -115,7 +115,7 @@ function generateReadableHTML(results, wcagLevel) {
               <strong>Target:</strong> ${n.target.join(", ")}<br/>
               <strong>Failure Summary:</strong> ${n.failureSummary || "N/A"}
             </div>
-          `
+          `,
             )
             .join("")}
         </details>
@@ -144,7 +144,7 @@ function generateReadableHTML(results, wcagLevel) {
 runA11yScan().then((violations) => {
   if (violations > 0) {
     console.error(
-      `🚫 Accessibility violations found: ${violations}. Commit blocked.`
+      `🚫 Accessibility violations found: ${violations}. Commit blocked.`,
     );
     process.exit(1); // FAIL
   }
