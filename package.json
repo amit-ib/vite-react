@@ -7,9 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky",
+    "test": "a11y-scan.js aaa"
   },
   "dependencies": {
+    "@axe-core/playwright": "^4.11.0",
+    "axe-html-reporter": "^2.2.11",
+    "playwright": "^1.57.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -22,6 +27,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "husky": "^9.1.7",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
