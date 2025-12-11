@@ -1,8 +1,10 @@
 # echo "🔎 Running Accessibility Scan..."
-# node a11y-scan.js aa
+node a11y-scan.js aa
+# npx lint-staged
 # echo "Running Prettier..."
 # npx prettier --write .
-if git diff --cached --name-only | grep -q ".env"; then
-  echo "❌ .env file cannot be committed!"
-  exit 1
-fi
+
+# if git diff --cached --name-only | grep -q ".env"; then
+#   echo "❌ .env file cannot be committed!"
+#   exit 1
+# fi

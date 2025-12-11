@@ -1,0 +1,32 @@
+
+1. Install eslint 
+npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --save-dev
+
+2. Install prettier
+npm install --save-dev eslint-config-prettier eslint-plugin-prettier prettier
+Add .prettierrc.json file with bellow code in it
+{
+    "singleQuote": false,
+    "trailingComma": "none",
+    "tabWidth": 4,
+    "useTabs": false,
+    "endOfLine": "auto"
+}
+
+
+3. install bellow to allow lint-staged and perform prettier formating to run on "COMMIT" only
+npm install lint-staged --save-dev
+
+4. Add bellow in  package.json
+"lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "eslint --max-warnings=0",
+            "prettier --write"
+        ]
+    }
+5. Install husky
+https://typicode.github.io/husky/get-started.html
+
+6. Add bellow code in husky file
+npx lint-staged
+

@@ -6,48 +6,48 @@ import fs from "fs";
 const wcagLevel = process.argv[2] || "aa";
 
 const WCAG_TAGS = {
-  a: ["wcag2a"],
-  aa: ["wcag2a", "wcag2aa"],
-  aaa: ["wcag2a", "wcag2aa", "wcag2aaa"],
+    a: ["wcag2a"],
+    aa: ["wcag2a", "wcag2aa"],
+    aaa: ["wcag2a", "wcag2aa", "wcag2aaa"]
 };
 
 const selectedTags = WCAG_TAGS[wcagLevel.toLowerCase()] || WCAG_TAGS["aa"];
 
 console.log(
-  `🔍 Running accessibility scan using WCAG level: ${wcagLevel.toUpperCase()}`,
+    `🔍 Running accessibility scan using WCAG level: ${wcagLevel.toUpperCase()}`
 );
 
 const runA11yScan = async () => {
-  const browser = await chromium.launch();
-  const context = await browser.newContext();
-  const page = await context.newPage();
+    const browser = await chromium.launch();
+    const context = await browser.newContext();
+    const page = await context.newPage();
 
-  await page.goto("http://localhost:5173/");
+    await page.goto("http://localhost:5173/");
 
-  const results = await new AxeBuilder({ page })
-    .withTags(selectedTags)
-    .analyze();
+    const results = await new AxeBuilder({ page })
+        .withTags(selectedTags)
+        .analyze();
 
-  const html = generateReadableHTML(results, wcagLevel);
+    const html = generateReadableHTML(results, wcagLevel);
 
-  if (!fs.existsSync("accessibility-report")) {
-    fs.mkdirSync("accessibility-report");
-  }
+    if (!fs.existsSync("accessibility-report")) {
+        fs.mkdirSync("accessibility-report");
+    }
 
-  fs.writeFileSync("accessibility-report/a11y-report.html", html);
+    fs.writeFileSync("accessibility-report/a11y-report.html", html);
 
-  console.log(
-    "✨ Readable accessibility report generated: accessibility-report/a11y-report.html",
-  );
+    console.log(
+        "✨ Readable accessibility report generated: accessibility-report/a11y-report.html"
+    );
 
-  await browser.close();
+    await browser.close();
 
-  // return number of violations for Husky
-  return results.violations.length;
+    // return number of violations for Husky
+    return results.violations.length;
 };
 
 function generateReadableHTML(results, wcagLevel) {
-  const styles = `
+    const styles = `
     <style>
       body { font-family: Arial, sans-serif; padding: 20px; background: #fafafa; }
       h1 { text-align: center; }
@@ -90,11 +90,11 @@ function generateReadableHTML(results, wcagLevel) {
     </style>
   `;
 
-  const violationHTML = results.violations
-    .map((v) => {
-      const impact = v.impact || "moderate";
+    const violationHTML = results.violations
+        .map((v) => {
+            const impact = v.impact || "moderate";
 
-      return `
+            return `
       <div class="violation-card impact-${impact}">
         <h2>${v.id} — ${v.description}</h2>
 
@@ -103,29 +103,29 @@ function generateReadableHTML(results, wcagLevel) {
         </span>
 
         <p><strong>Help:</strong> <a href="${v.helpUrl}" target="_blank">${
-          v.help
+            v.help
         }</a></p>
 
         <details>
           <summary>Show affected elements (${v.nodes.length})</summary>
           ${v.nodes
-            .map(
-              (n) => `
+              .map(
+                  (n) => `
             <div class="node-list">
               <strong>Target:</strong> ${n.target.join(", ")}<br/>
               <strong>Failure Summary:</strong> ${n.failureSummary || "N/A"}
             </div>
-          `,
-            )
-            .join("")}
+          `
+              )
+              .join("")}
         </details>
 
         <p><strong>Tags:</strong> ${v.tags.join(", ")}</p>
       </div>`;
-    })
-    .join("");
+        })
+        .join("");
 
-  return `
+    return `
     <html>
       <head>
         <title>Readable Accessibility Report</title>
@@ -142,13 +142,13 @@ function generateReadableHTML(results, wcagLevel) {
 
 // ⭐ MAIN EXECUTION + HUSKY COMMIT BLOCK ⭐
 runA11yScan().then((violations) => {
-  if (violations > 0) {
-    console.error(
-      `🚫 Accessibility violations found: ${violations}. Commit blocked.`,
-    );
-    process.exit(1); // FAIL
-  }
+    if (violations > 0) {
+        console.error(
+            `🚫 Accessibility violations found: ${violations}. Commit blocked.`
+        );
+        process.exit(1); // FAIL
+    }
 
-  console.log("✅ No accessibility issues. Commit allowed.");
-  process.exit(0); // PASS
+    console.log("✅ No accessibility issues. Commit allowed.");
+    process.exit(0); // PASS
 });
