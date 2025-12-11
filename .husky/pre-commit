@@ -1,5 +1,5 @@
 # echo "🔎 Running Accessibility Scan..."
-# node a11y-scan.js aa
+node a11y-scan.js aa
 # npx lint-staged
 # echo "Running Prettier..."
 # npx prettier --write .
